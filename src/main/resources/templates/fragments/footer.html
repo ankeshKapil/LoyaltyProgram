@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="footer">
+ <footer class="page-footer indigo darken-3">
+  <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="text-lighten-3" >Ankesh</a>
+      </div>
+   </div>
+ </footer>
+  <!--  Scripts-->
+  <!--Import jQuery before materialize.js-->
+  
+  <script type="text/javascript" th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+  <script type="text/javascript" th:src="@{/js/materialize.min.js}" th:src="@{/js/materialize.min.js}"></script>
+  <script th:src="@{/js/init.js}"></script>
+</div>
+</body>
+</html>

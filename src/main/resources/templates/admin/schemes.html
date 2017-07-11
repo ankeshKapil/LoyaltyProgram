@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header::headerFragment">
+<title id="pageTitle">Schemes</title>
+</head>
+<body>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}">
+	<!-- Nav Bar -->
+	<div th:include="fragments/header::nav"></div>
+	<main>
+
+	<div class="section no-pad-bot" id="index-banner">
+
+		<div class="row">
+			<div class="col s12">
+
+
+				<!--Add Scheme Modal Structure -->
+				<div id="add-scheme-model" class="modal modal-fixed-footer scheme-modal">
+					<form id="addscheme" name="addscheme">
+						<div class="modal-content">
+							<h4>Add/Edit Scheme</h4>
+							<!-- This section contains form -->
+
+							<div class="row">
+								<div class="col s12">
+									<!-- Row 1 -->
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">loyalty</i> <input
+												type="text" class="validate" id="scheme-name" name="name"
+												required="true"> <label for="scheme-name">Scheme
+												Name</label>
+										</div>
+
+									</div>
+									<!-- Row 2 -->
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">date_range</i> <input
+												type="date" class="datepicker" id="start-date"
+												name="startDate" required="true"> <label
+												for="start-date">Start Date</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="material-icons prefix">date_range</i> <input
+												type="date" class="datepicker" id="end-date" name="endDate"
+												required="true"> <label for="end-date">End
+												Date</label>
+										</div>
+									</div>
+									<div id="prize_fields">
+
+									</div>
+									<div class="row" id="prizes">
+										<div class="col s12">
+											<button type="button" onclick="prizeField()" class="btn waves-effect waves-light indigo darken-3"><i class="material-icons right">add</i>Add Prize</button>
+										</div>
+									</div>
+									<!-- making id as hidden because its not required  -->
+									<input type="hidden" id="scheme-id" name="id">
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="reset"
+								class="modal-action modal-close waves-effect waves-light btn btn-flat left"
+								id="cancel">
+								<i class="material-icons right">close</i>Cancel
+							</button>
+							<button type="submit"
+								class=" waves-effect waves-light btn indigo darken-3"
+								id="add-scheme">
+								<i class="material-icons right">save</i>Save
+							</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row card white-text indigo darken-3">
+			<div class="col s12">
+				<div class="col s8 ">
+					<h3 class="center-align">Schemes Data</h3>
+				</div>
+				<div class="col s4 ">
+					<!--Add Scheme Modal Trigger -->
+					<div class="">
+						<a data-target="add-scheme-model"
+							class="btn-floating halfway-fab btn-large waves-effect waves-light tooltipped yellow"
+							data-position="right" data-delay="50"
+							data-tooltip="Add New Scheme"> <i
+							class="material-icons right">add</i>Add Scheme
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="card-panel">
+			<div class="row">
+				<div class="col s12">
+					<table id="schemes" class="highlight bordered">
+						<thead>
+							<tr>
+							    <th></th>
+                                <th>ID</th>
+								<th>Name</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th></th>
+						<!-- 		<th></th> -->
+							</tr>
+						</thead>
+
+						<tbody>
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	</main>
+	<!-- Footer -->
+	<div th:include="fragments/footer::footer"></div>
+	<script type="text/javascript" charset="utf8"
+		th:src="@{/js/datatables.js}"></script>
+	<script type="text/javascript" charset="utf8"
+		th:src="@{/js/schemes.js}"></script>
+</body>
+</html>

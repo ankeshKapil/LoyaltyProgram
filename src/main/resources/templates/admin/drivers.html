@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header::headerFragment">
+<title id="pageTitle">Drivers</title>
+</head>
+<body>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/datatables.css}">
+	<!-- Nav Bar -->
+	<div th:include="fragments/header::nav"></div>
+	<main>
+	<div class="section no-pad-bot" id="index-banner">
+		<div class="row">
+			<div class="col s12">
+				<!--Add Driver Modal Structure -->
+				<div id="add-driver-model" class="modal modal-fixed-footer">
+					<form id="driverform" name="driverform">
+						<div class="modal-content">
+							<!-- This section contains form -->
+							<h4>Add/Edit Driver</h4>
+
+							<div class="row">
+								<div class="col s12">
+									<!-- Row 1 -->
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">account_circle</i> <input
+												name="firstName" type="text" class="validate"
+												id="driver-first-name"> <label
+												for="driver-first-name">First Name</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="material-icons prefix">account_circle</i> <input
+												type="text" name="lastName" class="validate"
+												id="driver-last-name"> <label for="driver-last-name">Last
+												Name</label>
+										</div>
+									</div>
+									<!-- Row 2 -->
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">phone</i> <input type="number"
+												class="validate" name="phoneNumber" data-length="10"
+												id="driver-phone-number"> <label
+												for="driver-first-name">Mobile Number</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="material-icons prefix">card_membership</i> <input
+												type="number" name="cardNumber" class="validate"
+												id="card-number"> <label for="driver-last-name">Loyalty
+												Card Number</label>
+										</div>
+									</div>
+									<!-- Row 3 -->
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">local_shipping</i> <input
+												type="text" class="validate" name="vehicleNumber"
+												id="vehicle-number"> <label for="vehicle-number">Vehicle
+												Number</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="material-icons prefix">loyalty</i> 
+											<input	type="text" name="scheme" id="driver-scheme"
+												class="autocomplete schemes"> <label
+												for="driver-scheme">Scheme</label>
+										</div>
+									</div>
+									<!-- Row 4 -->
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">perm_identity</i> <input
+												type="text" name="idCardType" class="validate"
+												id="idcard-type"> <label for="idcard-type">ID
+												Card Type</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="material-icons prefix">format_list_numbered</i> <input
+												type="text" name="idCardNumber" id="idcard-number"
+												class="validate"> <label for="idcard-number">ID
+												Card Number</label>
+										</div>
+									</div>
+									<!-- Row 4 -->
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">home</i>
+											<textarea id="driver-address" name="address"
+												class="materialize-textarea"></textarea>
+											<label for="driver-address">Address</label>
+										</div>
+									</div>
+									<!-- Row 4 -->
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="material-icons prefix">format_list_numbered</i>
+											<input id="loyalty-points" name="loyaltyPoints"
+												readonly="readonly" placeholder="0">
+											<label for="loyalty-points" class="active">Loyalty Points</label>
+										</div>
+									</div>
+									<!-- 								Row 5
+								<div class="row">
+									<div class="input-field col s12">
+										<i class="material-icons prefix">place</i>
+										<div id="driver-routes"  class="chips routes-chips-placeholder"></div>
+										<label for="driver-routes">Routes</label>
+									</div>
+								</div> -->
+									<input id="driver-id" type="hidden" name="id">
+									<input id="created-on" type="hidden" name="createdOn">
+									<input id="updated-on" type="hidden" name="updatedOn">
+									<input id="total-volume" type="hidden" name="totalFuelVolume">
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="reset"
+								class="modal-action modal-close waves-effect waves-light btn btn-flat left"
+								id="cancel">
+								<i class="material-icons right">close</i>Cancel
+							</button>
+							<button type="submit"
+								class=" waves-effect waves-light btn indigo darken-3"
+								id="add-scheme">
+								<i class="material-icons right">save</i>Save
+							</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row card white-text indigo darken-3">
+			<div class="col s12">
+				<div class="col s8 ">
+					<h3 class="center-align">Drivers Data</h3>
+				</div>
+				<div class="col s4">
+					<!--Add Scheme Modal Trigger -->
+					<div class="">
+						<a data-target="add-driver-model"
+							class="btn-floating halfway-fab btn-large waves-effect waves-light tooltipped yellow"
+							data-position="right" data-delay="50"
+							data-tooltip="Add New Driver"> <i
+							class="material-icons right">add</i>Add Driver
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="card-panel">
+			<div class="row">
+				<div class="col s12">
+					<table id="drivers" class="highlight bordered">
+						<thead>
+							<tr>
+								<th></th>
+								<th>ID</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Mobile</th>
+								<th>Loyalty Card</th>
+								<th>Vehicle Number</th>
+								<th>Total Volume</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Structure -->
+  <div id="delete-driver" class="modal">
+    <div class="modal-content">
+      <h4>Delete Driver</h4>
+      <p>By Deleting this driver, all the associated transactions data of this driver will also be deleted.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close  waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" class="modal-action modal-close driver_delete_agree waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
+
+
+    </main>
+
+	<!-- Footer -->
+	<div th:include="fragments/footer::footer"></div>
+	<script type="text/javascript" charset="utf8"
+		th:src="@{/js/datatables.js}"></script>
+	<script type="text/javascript" charset="utf8"
+		th:src="@{/js/drivers.js}"></script>
+</body>
+</html>

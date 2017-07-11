@@ -1,0 +1,45 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head th:fragment="headerFragment">
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+	
+	  <!-- CSS  -->
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	  <link th:href="@{/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+	  <title th:include=":: #pageTitle">Loyalty App< /title>
+  </head>
+
+  <body>
+   <div th:fragment="nav">
+   <header sec:authorize="isAuthenticated()">
+	 <nav class="indigo darken-3" role="navigation">
+	    <div class="nav-wrapper container">
+	    <a class="page-title" th:href="@{/admin/home}">
+	    <span>
+	    Loyalty Program
+	    </span>
+	    	
+	    </a>
+	      <ul class="right hide-on-med-and-down">
+	      		    <li><a th:href="@{/admin/driversview}">Drivers</a></li>
+			        <li><a th:href="@{/admin/schemesview}">Schemes</a></li>
+			        <li><a th:href="@{/admin/transactionview}">Transactions</a></li>
+	        	    <li><a th:href="@{/logout}" >Logout<i class="material-icons right">power_settings_new</i></a></li>
+	      </ul>
+	      <ul id="nav-mobile" class="side-nav">
+	      	 <li><a th:href="@{/admin/driversview}">Drivers</a></li>
+	        <li><a th:href="@{/admin/schemesview}">Schemes</a></li>
+	        <li><a th:href="@{/admin/transactionview}">Transactions</a></li>
+	        <li><a th:href="@{/logout}" >Logout</a></li>
+	      </ul>
+	      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+	    </div>
+	  </nav>
+	 </header>
+	</div>
+   </body>
+    
+  </html>

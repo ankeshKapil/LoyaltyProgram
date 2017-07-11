@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+<!-- CSS  -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link th:href="@{/css/materialize.css}" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+<link th:href="@{/css/style.css}" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+</head>
+
+<body>
+	<main>
+
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+				<h2 class="header">Login</h2>
+				<div class="card horizontal">
+					<div class="card-image">
+						<img th:src="@{/images/login.jpg}">
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+						
+								<!-- Add form here -->
+								<div class="row">
+									<form th:action="@{/login}" method="POST">
+									<div class="col s12">
+										<div class="row">
+											<div class="input-field col s12">
+												<input type="text" id="mobilenumber" name="mobilenumber"
+													class="validate" required="true" /> <label
+													for="mobilenumber">Mobile Number</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field  col s12">
+												<input type="password" id="password" name="password"
+													class="validate" required="true" />
+											<label
+													for="password">Password</label>
+													
+											</div>
+										</div>
+									
+										<div class="row">
+											<div class="input-field col s6">
+												<button class="waves-effect waves-light btn"  name="Submit" value="Login" type="submit" th:text="Login">Login</button>
+											</div>
+											<div class="input-field col s6">
+												<a class="waves-effect waves-light btn" th:href="@{/registration}">Sign Up</a>
+											</div>
+										
+										</div>
+										<div class="row" th:if="${param.error}">
+											<div class="col s12 red-text">
+													<p>Email or Password invalid, please verify</p>
+												
+											</div>
+										</div>
+									</div>
+									</form>
+								</div>
+					
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	</main>
+	<div th:include="fragments/footer::footer"></div>
+</body>
+</html>
