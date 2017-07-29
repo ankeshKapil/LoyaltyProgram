@@ -1,5 +1,14 @@
 
 $(document).ready(function(){
+	
+	//if cardnumber is present in url search using cardnumber
+	let params = (new URL(location)).searchParams;
+	var cardNumber=params.get('cardnumber');
+	$('#search-card-number').val(cardNumber);
+	params.delete('cardnumber');
+	window.history.replaceState({}, '', `${location.pathname}?${params}`);
+	
+	
 	$('#add-transaction-model').modal({
 		dismissible : false,
 		opacity : .5,
@@ -9,17 +18,64 @@ $(document).ready(function(){
 		  document.getElementById("transaction-createdOn").value=null;
 		  $('#amount').prop('disabled',false);
 		  $("#fuelVolumeLabel").text("Fuel Volume");
+			$("#prize-select").hide();
 	    	//reset form forcefully
 	    }
 
 	});
 	//disable amount field and set volume label to points
 	$('#redeem').click(function(){
-        $('#amount').prop('disabled',this.checked);
-        $('#amount').val(0);
-        $("#fuelVolumeLabel").text(this.checked?"Loyalty Points":"Fuel Volume");
-        Materialize.updateTextFields();
+		var redeem=this;
+        
+        if($("#card-number").valid() && redeem.checked){
+        	$('#amount').prop('disabled',true);
+            $('#amount').val(0);
+            $("#fuelVolumeLabel").text("Loyalty Points");
+            Materialize.updateTextFields();
+        	$('#prize').prop('disabled',false);
+        	populatePrizes();
+        	$("#prize-select").show();
+        }
+        else{
+        	$('#redeem').prop('checked',false);
+        	$('#amount').prop('disabled',false);
+        	 $("#fuelVolumeLabel").text("Fuel Volume");
+        	$('#amount').val("");
+        	$('#prize').empty();
+        	$('#prize').append($('<option>', { 
+		        value: "",
+		        text : "Choose your Prize",
+		        selected:true,
+		        disabled:true
+		    }));
+        	$('#prize').prop('disabled',true);
+        	$("#prize-select").hide();
+        	$( "#transaction-notes" ).val("");
+    	    $( "#fuelVolume" ).val("");
+        }
+       
+        
     });
+	
+	
+	$( "#prize" )
+	  .change(function() {
+	    var text;
+	    var value;
+	    $( "#prize option:selected" ).each(function() {
+	    	if($( this ).val()){
+	    	  text= $( this ).text();
+	   	      value=$( this ).val();
+	   	      $( "#transaction-notes" ).val( text );
+	   		  $( "#fuelVolume" ).val( value );
+	    	}
+	    	 Materialize.updateTextFields();
+	    });
+	    
+	  })
+	  .trigger( "change" );
+	
+	
 	
 	$("#addtransaction").validate({
 		onfocusout : false,
@@ -65,6 +121,7 @@ $(document).ready(function(){
 			transaction["trxTime"]=form.trxTime.value;
 			transaction["id"]=form.id.value;
 			transaction["redeem"]=form.reedem.checked;
+			transaction["transactionNotes"]=form.transactionNotes.value;
 			var driver={};
 			driver["cardNumber"]=form.cardNumber.value;
 			transaction["driver"]=driver;
@@ -99,7 +156,7 @@ $(document).ready(function(){
 	getSchemesForAutoComplete();
 	 $('input.cards').autocomplete({
 		    data: cardsAutoComplete,
-		    limit: 20, // The max amount of results that can be shown at once.
+		    limit: 5, // The max amount of results that can be shown at once.
 						// Default: Infinity.
 		    onAutocomplete: function(val) {
 		      // Callback function when value is autcompleted.
@@ -109,55 +166,67 @@ $(document).ready(function(){
 		  });
 	 
 	 var  table = $('#transaction').DataTable({
+		 "searching": false,
 		 ajax: {
 			 url:"/admin/transaction",
+			 "data": function ( d ) {
+			        d.searchCardNumber = $('#search-card-number').val();
+			        d.startDate=$("#start-date").val();
+			        d.endDate=$("#end-date").val();
+			    },
+			 error:function(e){
+				 Materialize.toast(e.responseJSON.message, 4000,'red');
+			 }
 
 		 },
 		 lengthChange:false,
 				 columns: [
-						 {"data":"id"},
+						 
 						 { "data": "driver.cardNumber" },
 						 { "data": "trxTime" },
 						 {"data":  "fuelVolume"},
 						 {"data":"amount"},
-      					 {"data":"redeem"},
+      					 {"data":"redeem",
+						   "render":(data,type,full)=>{
+							   var trxType=(data==true?"Redeem":"Sale");
+							   if(full.transactionNotes){
+								   return '<span class="tooltipped" data-position="right" data-delay="50" data-tooltip="'+full.transactionNotes+'">'+trxType+'</span>';
+							   }
+							   else{
+								   return trxType;
+							   }
+						   }
+					     },
 						 {
 							 "data": "null",
 							 "defaultContent": '<a  class=" btn-floating btn-large waves-effect waves-light red trx_delete tooltipped" data-position="left" data-delay="50" data-tooltip="Remove Transaction"><i class="material-icons right">delete</i></a>'
-						 }//,
-//						 {
-//							 "data":"null",
-//							 "defaultContent": '<a  class=" btn-floating btn-large waves-effect waves-light indigo darken-3 trx_edit tooltipped" data-position="right" data-delay="50" data-tooltip="Edit Transaction"><i class="material-icons right">mode_edit</i></a>'
-//						 }
+						 }
 				],
 				"columnDefs": [
 				               {
-				                   // The `data` parameter refers to the data for the cell (defined by the
-				                   // `data` option, which defaults to the column being worked with, in
-				                   // this case `data: 0`.
+
 				                   "render": function ( data, type, row ) {
 				                	   
 				                       return data==true?"Redeem":"Sale";
 				                   },
-				                   "targets": 5
+				                   "targets": 4
 				               },
 				               {
-				                   // The `data` parameter refers to the data for the cell (defined by the
-				                   // `data` option, which defaults to the column being worked with, in
-				                   // this case `data: 0`.
 				                   "render": function ( data, type, row ) {
 				                	   
 				                       return "<a class='driver-details waves-effect waves-teal btn-flat blue-text'>"+data+"<i class='material-icons right'>play_for_work</i></a>";
 				                   },
-				                   "targets": 1
+				                   "targets": 0
 				               }
 				           ],
-				"order": [[2, 'asc']],
+				"order": [[5, 'asc']],
 		 "drawCallback":function(){
 			 $('.tooltipped').tooltip({
 				 delay : 50,
 				 html:true
 			 });
+			 $("[id$=_filter] > label").css("fontSize", "20px");
+
 		 }
 
 		});
@@ -187,30 +256,15 @@ $(document).ready(function(){
 			$('a.trx_delete').tooltip('remove');
 				 deleteTransaction(data,table);
 			 } );
-//			$('#transaction').on('click', 'a.trx_edit', function () {
-//			var data = table.row($(this).closest('tr')).data();
-//			//fill form values
-//			
-//			for(var key in data){
-//			 $("[name='"+key+"']").val(data[key]);
-//			 if(key==='driver'){
-//				 $("[name='cardNumber']").val(data[key].cardNumber);
-//			 }
-//			 if(key==='redeem'){
-//				 if(data[key]){
-//					 $('#redeem').click();
-//				 }
-//			 }
-//			 
-//			
-//			}
-//			
-//			$('#add-transaction-model').modal('open');
-//			Materialize.updateTextFields();
-//			 } );
 
 
-	 
+			
+		$("#searchtrx").click(function(e){
+			e.preventDefault();
+			table.ajax.reload();
+		}
+		);
+		
 	
 });
 
@@ -251,9 +305,8 @@ function formatChildRow ( d ) {
 			break;
 		}
 	}
-	
-	
 	return '<div class="row">'+
+		'<h3>About Driver</h3>'+
 		'<div class="col s12">'+
 			'<div class="card-panel">'+
 			   '<div class="row">'+
@@ -295,4 +348,32 @@ function formatChildRow ( d ) {
 			'</div>'+
 		'</div>'+
 	'</div>';
+}
+function populatePrizes(){
+	$('#prize').empty();
+	$('#prize').material_select('destroy');
+	$('#prize').material_select();
+	$.ajax({
+		url:'/admin/getPrizes',
+		data:{
+			searchCardNumber:$("#card-number").val()
+		},
+		success:function(prizes){
+			$('#prize').append($('<option>', { 
+		        value: "",
+		        text : "Choose your Prize",
+		        selected:true,
+		        disabled:true
+		    }));
+
+			$.each(prizes, function (i, prize) {
+			    $('#prize').append($('<option>', { 
+			        value: prize.targetFuel,
+			        text : prize.prizeName 
+			    }));
+			});
+			$('#prize').material_select();
+		}
+		
+	});
 }

@@ -1,10 +1,11 @@
 
 $(document).ready(function() {
 
-	$('.scheme-modal').modal({
+	$('#add-scheme-model').modal({
 		dismissible : false,
 		opacity : .5,
 	    complete: function() {
+	    	
 	    	document.getElementById("addscheme").reset();
 			document.getElementById("scheme-id").value=null;
 			document.getElementById('prize_fields').innerHTML="";
@@ -109,7 +110,7 @@ $(document).ready(function() {
                       "data":           null,
                       "defaultContent": '<a  class=" btn-floating btn-large waves-effect waves-light indigo daerken-3"><i class="material-icons right">play_for_work</i></a>'
                   },
-            {"data":"id"},
+//            {"data":"id"},
             { "data": "name" },
             { "data": "startDate" },
             { "data": "endDate" },
@@ -122,12 +123,14 @@ $(document).ready(function() {
             	"defaultContent": '<a  class=" btn-floating btn-large waves-effect waves-light indigo darken-3 scheme_edit tooltipped" data-position="right" data-delay="50" data-tooltip="Edit Scheme"><i class="material-icons right">mode_edit</i></a>'
             }
        ],
-       "order": [[1, 'asc']],
+  
 		"drawCallback":function(){
 			$('.tooltipped').tooltip({
 				delay : 50,
 				html:true
 			});
+			
+			$("[id$=_filter] > label").css("fontSize", "20px");
 		}
 
  });
@@ -171,7 +174,7 @@ $(document).ready(function() {
 
 		}
 
-		$('#addscheme').modal('open');
+		$('#add-scheme-model').modal('open');
 		Materialize.updateTextFields();
 	    } );
 
@@ -197,7 +200,10 @@ function formatChildRow ( d ) {
                         '<th>Target Volume</th>'+
                         '<th>Prize</th>'+
                  '</tr>';
-	for(prize in d.prizes){
+	var prizes=d.prizes.sort(function(prizeA,prizeB){
+		return prizeB.targetFuel-prizeA.targetFuel;
+	});
+	for(prize in prizes){
 		table+='<tr>'+
 			       '<td>'+d.prizes[prize].targetFuel+' Lt</td>'+
 			       '<td>'+d.prizes[prize].prizeName+'<td>'+

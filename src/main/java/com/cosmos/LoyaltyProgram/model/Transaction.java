@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.CascadeType;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -56,6 +54,9 @@ public class Transaction implements Serializable {
     private Driver driver;
     @Column(name = "redeem")
     private boolean redeem;
+    
+    @Column(name="notes")
+    private String transactionNotes;
 
     public Long getId() {
         return id;
@@ -121,6 +122,14 @@ public class Transaction implements Serializable {
 
 	public void setRedeem(boolean redeem) {
 		this.redeem = redeem;
+	}
+
+	public String getTransactionNotes() {
+		return transactionNotes;
+	}
+
+	public void setTransactionNotes(String transactionNotes) {
+		this.transactionNotes = transactionNotes;
 	}
 
 	@Override

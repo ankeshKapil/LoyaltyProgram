@@ -1,9 +1,14 @@
 package com.cosmos.LoyaltyProgram.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.validation.ValidationException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +27,14 @@ public class DriverServiceImpl implements DriverService {
 	
 	@Override
 	public Driver saveDriver(Driver driver) {
-		driver.setUpdatedOn(LocalDateTime.now());
+		driver.setUpdatedOn(LocalDateTime.now(ZoneId.of("Asia/Kolkata")));
 		if(StringUtils.isEmpty(driver.getId())){
-			driver.setCreatedOn(LocalDateTime.now());
+			driver.setCreatedOn(LocalDateTime.now(ZoneId.of("Asia/Kolkata")));
 		}
+		if(driverRepository.getDriverByCardNumber(driver.getCardNumber())!=null)
+			throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
+		if(driverRepository.getDriverByPhoneNumber(driver.getPhoneNumber())!=null)
+			throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
 		return driverRepository.save(driver);
 	}
 
@@ -49,5 +58,12 @@ public class DriverServiceImpl implements DriverService {
 	public Driver getDriverByCardNumber(Long cardNumber){
 		return driverRepository.getDriverByCardNumber(cardNumber);
 	}
+	
+	public DatatableCollection<Driver> getDriverByLastFuelingTimeBefore(){
+		DatatableCollection<Driver> collection=new DatatableCollection<>();
+		collection.setData(driverRepository.getDriverByLastFuelingTimeBefore(LocalDateTime.of(LocalDate.now().minusDays(15), LocalTime.MIN)));
+		return collection;
+	}
+	  
 
 }

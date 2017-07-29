@@ -9,13 +9,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,9 +22,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 /**
@@ -87,7 +84,13 @@ public class Driver implements Serializable {
     @Column(name = "common_routes")
     private String commonRoutes;
     
-    @OneToMany(mappedBy = "driver",cascade=CascadeType.ALL)
+    @JsonFormat(pattern = "d MMMM, yyyy HH:mm")
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Column(name = "last_fueling_time")
+    private LocalDateTime lastFuelingTime; 
+    
+    @OneToMany(mappedBy = "driver",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     private Set<Transaction> transactions;
     
 
@@ -231,6 +234,16 @@ public class Driver implements Serializable {
 	public void setLoyaltyPoints(long loyaltyPoints) {
 		this.loyaltyPoints = loyaltyPoints;
 	}
+
+	public LocalDateTime getLastFuelingTime() {
+		return lastFuelingTime;
+	}
+
+	public void setLastFuelingTime(LocalDateTime lastFuelingTime) {
+		this.lastFuelingTime = lastFuelingTime;
+	}
+
+
 
 	@Override
     public boolean equals(Object o) {

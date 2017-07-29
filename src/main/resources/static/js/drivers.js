@@ -16,7 +16,7 @@ $(document).ready(function(){
 			  document.getElementById("created-on").value=null;
 			  document.getElementById("updated-on").value=null;
 			  document.getElementById("total-volume").value=null;
-			  
+			  document.getElementById("last-fueling-time").value=null;
 	    	//reset form forcefully
 	    }
 
@@ -82,16 +82,11 @@ $(document).ready(function(){
 			driver["createdOn"]=form.createdOn.value;
 			driver["updatedOn"]=form.updatedOn.value;
 			driver["loyaltyPoints"]=form.loyaltyPoints.value;
+			driver["lastFuelingTime"]=form.lastFuelingTime.value;
 			if(!form.totalFuelVolume.value){
 				form.totalFuelVolume.value=0;
 			}
 			driver["totalFuelVolume"]=form.totalFuelVolume.value;
-			// var routesChips=$('#driver-routes').material_chip('data');
-			// var driverRoutes=[];
-			// for(chip in routesChips){
-			// 	driverRoutes.push(chip.tag);
-			// }
-			// driver["commonRoutes"]=driverRoutes;
 			var schemeText=form.scheme.value;
 			var schemeId=schemeText.slice(0,schemeText.indexOf('-'));
 			var scheme={
@@ -121,7 +116,7 @@ $(document).ready(function(){
 					  document.getElementById("updated-on").value=null;
 					  document.getElementById("total-volume").value=null;
 					$('#add-driver-model').modal('close');
-					Materialize.toast(e.message, 4000);
+					Materialize.toast(e.responseJSON.message, 4000,'red');
 				}
 			});
 
@@ -153,7 +148,7 @@ $(document).ready(function(){
 												 "data":           null,
 												 "defaultContent": '<a  class=" btn-floating btn-large waves-effect waves-light indigo daerken-3"><i class="material-icons right">play_for_work</i></a>'
 										 },
-							 {"data":"id"},
+							
 							 { "data": "firstName" },
 							 { "data": "lastName" },
 							 { "data": "cardNumber" },
@@ -175,6 +170,8 @@ $(document).ready(function(){
 					 delay : 50,
 					 html:true
 				 });
+				 
+				 $("[id$=_filter] > label").css("fontSize", "20px");
 			 }
 
 			});
@@ -275,13 +272,25 @@ function formatChildRow ( d ) {
 		'<div class="col s12">'+
 			'<div class="card-panel">'+
 			   '<div class="row">'+
-			  	'<div class="col s6">Loyalty Points</div>'+
+			  	 '<div class="col s6">Loyalty Points</div>'+
 				 '<div class="col s6">'+d.loyaltyPoints+' Points</div>'+
 				'</div><hr>'+
-				  '<div class="row">'+
-				  	'<div class="col s6">Total Volume</div>'+
-					 '<div class="col s6">'+d.totalFuelVolume+' Lt</div>'+
-					'</div><hr>'+
+				'<div class="row">'+
+			  	  '<div class="col s6">Total Volume</div>'+
+				  '<div class="col s6">'+d.totalFuelVolume+' Lt</div>'+
+				'</div><hr>'+
+				'<div class="row">'+
+					 '<div class="col s6">Scheme</div>'+
+					 '<div class="col s6">'+d.scheme.name+'</div>'+
+				 '</div><hr>'+
+				'<div class="row">'+
+					'<div class="col s6">Achieved Prize</div>'+
+				    '<div class="col s6">'+eligibleForPrize.prizeName+'</div>'+
+				'</div><hr>'+
+				'<div class="row">'+
+			  	  '<div class="col s6">Last Transaction Time</div>'+
+				  '<div class="col s6">'+d.lastFuelingTime+'</div>'+
+				'</div><hr>'+
 				'<div class="row">'+
 				   '<div class="col s6">Created On</div>'+
 					 '<div class="col s6">'+d.createdOn+'</div>'+
@@ -303,12 +312,9 @@ function formatChildRow ( d ) {
 					 '<div class="col s6">'+d.address+'</div>'+
 				'</div><hr>'+
 				'<div class="row">'+
-				   '<div class="col s6">Scheme</div>'+
-					 '<div class="col s6">'+d.scheme.name+'</div>'+
-				'</div><hr>'+
-				'<div class="row">'+
-				   '<div class="col s6">Achieved Prize</div>'+
-					 '<div class="col s6">'+eligibleForPrize.prizeName+'</div>'+
+				   '<div class="col s12">'+
+				   	'<a href="/admin/transactionview?cardnumber='+d.cardNumber+'">View All Transactions</a>'+
+				   '</div>'+
 				'</div><hr>'+
 			'</div>'+
 		'</div>'+

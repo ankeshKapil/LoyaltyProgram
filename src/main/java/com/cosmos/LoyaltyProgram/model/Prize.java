@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Table(name = "prize")
 @Entity
-public class Prize implements Serializable {
+public class Prize implements Comparable<Prize>, Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -66,6 +66,12 @@ public class Prize implements Serializable {
 		builder.append("Prize [id=").append(prizeId).append(", prizeName=").append(prizeName).append(", targetFuel=")
 				.append(targetFuel).append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Prize o) {
+		
+		return o.targetFuel-this.targetFuel;
 	}
 	
 

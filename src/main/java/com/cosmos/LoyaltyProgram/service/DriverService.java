@@ -16,5 +16,7 @@ public interface DriverService {
 	public List<Long> getCardNumbers();
 	
 	public Driver getDriverByCardNumber(Long cardNumber);
+	
+	public DatatableCollection<Driver> getDriverByLastFuelingTimeBefore();
 
 }

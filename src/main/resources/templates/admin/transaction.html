@@ -32,7 +32,7 @@
 												<input type="number" name="cardNumber" class="validate cards"
 												id="card-number"> <label for="driver-last-name">Loyalty Card Number</label>
 										</div>
-										<div class="row">
+										
 										<div class="input-field col s3">
 										   <input type="checkbox" id="redeem" name="reedem" />
       										<label for="redeem">Redeem</label>
@@ -41,7 +41,7 @@
 									</div>
 									<!-- Row 2 -->
 									
-										
+									<div class="row">
 										<div class="input-field col s6">
 										   <i class="material-icons prefix">format_color_fill</i>
 											<input
@@ -52,6 +52,23 @@
 											<i class="material-icons prefix">attach_money</i> <input
 												type="number" class="validate" id="amount" name="amount" min="0"
 												required="true"> <label for="amount">Amount</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="material-icons prefix">note</i>
+											<textarea id="transaction-notes" name="transactionNotes"
+												class="materialize-textarea"></textarea>
+											<label for="transaction-notes">Note</label>
+										</div>
+
+						
+									    <div class="input-field col s6" id="prize-select" hidden="true">
+											<select id="prize" disabled class="browser-default">
+												 <option value="" disabled selected>Choose your Prize</option>
+										    </select>
+										  
+										    
 										</div>
 									</div>
 									<!-- making id as hidden because its not required  -->
@@ -82,33 +99,62 @@
 	<div class="container">
 		<div class="row card white-text indigo darken-3">
 			<div class="col s12">
-				<div class="col s8 ">
-					<h3 class="center-align">Transaction Data</h3>
-				</div>
-				<div class="col s4 ">
-					<!--Add Scheme Modal Trigger -->
-					<div class="">
-						<a data-target="add-transaction-model"
-							class="btn-floating halfway-fab btn-large waves-effect waves-light tooltipped yellow"
-							data-position="right" data-delay="50"
-							data-tooltip="Add New Transaction"> <i
-							class="material-icons right">add</i>Add Transaction
-						</a>
+				<div class="row">
+					<div class="col s8 ">
+						<h3 class="center-align">Transaction Data</h3>
+					</div>
+					<div class="col s4 ">
+						<!--Add Scheme Modal Trigger -->
+						<div class="">
+							<a data-target="add-transaction-model"
+								class="btn-floating halfway-fab btn-large waves-effect waves-light tooltipped yellow"
+								data-position="right" data-delay="50"
+								data-tooltip="Add New Transaction"> <i
+								class="material-icons right">add</i>Add Transaction
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container">
 		<div class="card-panel">
+		<form  id="searchTransactions">
+			<div class="row">
+				<div class="input-field col s3">
+						<i class="material-icons prefix">card_membership</i> 
+						<input type="number" name="searchCardNumber" class="cards"
+						id="search-card-number" > <label for="driver-last-name">Loyalty Card Number</label>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">date_range</i> <input
+						type="date" class="datepicker" id="start-date"
+						name="startDate" required> <label
+						for="start-date">From</label>
+				</div>
+				<div class="input-field col s3">
+					<i class="material-icons prefix">date_range</i> <input
+						type="date" class="datepicker" id="end-date" name="endDate" required> <label for="end-date">To</label>
+				</div>
+				<div class="col s1">
+					  <button type="submit" class="btn-floating btn-large waves-effect waves-light indigo darken-3 white-text tooltipped" id="searchtrx" data-position="right" data-delay="50"
+							data-tooltip="Reload Data"><i class="material-icons">refresh</i></button>
+				</div>
+				<div class="col s1">
+					  <button type="reset" class="btn-floating btn-large waves-effect waves-light indigo darken-3 white-text tooltipped" id="reset" data-position="right" data-delay="50"
+							data-tooltip="clear"><i class="material-icons">close</i></button>
+				</div>
+			</div>
+		</form>
+			
 			<div class="row">
 				<div class="col s12">
-					<table id="transaction" class="highlight bordered">
+					<table id="transaction" class="highlight bordered display compact" cellspacing="0" width="100%">
 						<thead>
-							<tr>
-                                <th>ID</th>
-								<th>Card Number</th>
+							<tr>    
+								<th>Loyalty Card Number</th>
 								<th>Time</th>
 								<th>Fuel Volume</th>
 								<th>Amount</th>
@@ -116,12 +162,7 @@
 								<th></th>
 							</tr>
 						</thead>
-
-						<tbody>
-
-						</tbody>
 					</table>
-
 				</div>
 			</div>
 		</div>
