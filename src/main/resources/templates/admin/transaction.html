@@ -27,13 +27,13 @@
 								<div class="col s12">
 									<!-- Row 1 -->
 									<div class="row">
-										<div class="input-field col s9">
+										<div class="input-field col s12 l9">
 												<i class="material-icons prefix">card_membership</i> 
 												<input type="number" name="cardNumber" class="validate cards"
 												id="card-number"> <label for="driver-last-name">Loyalty Card Number</label>
 										</div>
 										
-										<div class="input-field col s3">
+										<div class="input-field col s12 l3">
 										   <input type="checkbox" id="redeem" name="reedem" />
       										<label for="redeem">Redeem</label>
 										</div>
@@ -42,20 +42,20 @@
 									<!-- Row 2 -->
 									
 									<div class="row">
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 										   <i class="material-icons prefix">format_color_fill</i>
 											<input
 												type="number" class="validate"  id="fuelVolume" required="true" name="fuelVolume" min="0"> <label
 												for="fuelVolume" id="fuelVolumeLabel">Fuel Volume</label>
 										</div>
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<i class="material-icons prefix">attach_money</i> <input
 												type="number" class="validate" id="amount" name="amount" min="0"
 												required="true"> <label for="amount">Amount</label>
 										</div>
 									</div>
 									<div class="row">
-										<div class="input-field col s6">
+										<div class="input-field col s12 l6">
 											<i class="material-icons prefix">note</i>
 											<textarea id="transaction-notes" name="transactionNotes"
 												class="materialize-textarea"></textarea>
@@ -63,7 +63,7 @@
 										</div>
 
 						
-									    <div class="input-field col s6" id="prize-select" hidden="true">
+									    <div class="input-field col s12 l6" id="prize-select" hidden="true">
 											<select id="prize" disabled class="browser-default">
 												 <option value="" disabled selected>Choose your Prize</option>
 										    </select>
@@ -101,7 +101,7 @@
 			<div class="col s12">
 				<div class="row">
 					<div class="col s8 ">
-						<h3 class="center-align">Transaction Data</h3>
+						<h3 class="center-align">Transactions</h3>
 					</div>
 					<div class="col s4 ">
 						<!--Add Scheme Modal Trigger -->
@@ -123,26 +123,26 @@
 		<div class="card-panel">
 		<form  id="searchTransactions">
 			<div class="row">
-				<div class="input-field col s3">
+				<div class="input-field col s12 l3">
 						<i class="material-icons prefix">card_membership</i> 
 						<input type="number" name="searchCardNumber" class="cards"
 						id="search-card-number" > <label for="driver-last-name">Loyalty Card Number</label>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s12 l3">
 					<i class="material-icons prefix">date_range</i> <input
 						type="date" class="datepicker" id="start-date"
 						name="startDate" required> <label
 						for="start-date">From</label>
 				</div>
-				<div class="input-field col s3">
+				<div class="input-field col s12 l3">
 					<i class="material-icons prefix">date_range</i> <input
 						type="date" class="datepicker" id="end-date" name="endDate" required> <label for="end-date">To</label>
 				</div>
-				<div class="col s1">
+				<div class="col s6 l2">
 					  <button type="submit" class="btn-floating btn-large waves-effect waves-light indigo darken-3 white-text tooltipped" id="searchtrx" data-position="right" data-delay="50"
 							data-tooltip="Reload Data"><i class="material-icons">refresh</i></button>
 				</div>
-				<div class="col s1">
+				<div class="col s6 l1">
 					  <button type="reset" class="btn-floating btn-large waves-effect waves-light indigo darken-3 white-text tooltipped" id="reset" data-position="right" data-delay="50"
 							data-tooltip="clear"><i class="material-icons">close</i></button>
 				</div>

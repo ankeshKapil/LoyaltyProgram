@@ -3,7 +3,8 @@
 
   <head th:fragment="headerFragment">
 	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	  <meta name="theme-color" content="#283593" />
 	
 	  <!-- CSS  -->
 	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,6 +16,7 @@
   <body>
    <div th:fragment="nav">
    <header sec:authorize="isAuthenticated()">
+   <div class="navbar-fixed">
 	 <nav class="indigo darken-3" role="navigation">
 	    <div class="nav-wrapper container">
 	    <a class="page-title" th:href="@{/admin/home}">
@@ -38,6 +40,7 @@
 	      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 	    </div>
 	  </nav>
+	  </div>
 	 </header>
 	</div>
    </body>

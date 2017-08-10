@@ -5,6 +5,7 @@ $(document).ready(function(){
 			 url:"/admin/dormantdrivers",
 
 		 },
+		 "scrollX": true,
 		 lengthChange:false,
 				 columns: [
 						 { "data": "firstName",

@@ -91,4 +91,5 @@ a.page-title{
       width:100%;
   }
   
+  .navbar-fixed { z-index: 9999; }
 

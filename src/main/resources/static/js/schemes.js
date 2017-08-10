@@ -102,6 +102,7 @@ $(document).ready(function() {
 			url:"/admin/schemes",
 
 		},
+		"scrollX": true,
 		lengthChange:false,
         columns: [
                   {
@@ -219,12 +220,12 @@ function prizeField(){
 	divtest.setAttribute("class", "removeclass"+prizeCount);
 	var rdiv='removeclass'+prizeCount;
 	    divtest.innerHTML = '<div class="row" id="prizes">'
-			+ '<div class="input-field col s5">'
+			+ '<div class="input-field col  s12 l5">'
 			+ '<i class="material-icons prefix">arrow_upward</i> <input type="number" class="validate" id="target-volume" name="targetVolume[]">'
 			+ '<label for="target">Target Volume</label></div>'
-			+ '<div class="input-field col s5"> <i class="material-icons prefix">card_giftcard</i>'
+			+ '<div class="input-field col s12 l5"> <i class="material-icons prefix">card_giftcard</i>'
 			+ '<input type="text" class="validate" id="prize" name="prize[]"> <label for="prize">Prize</label></div>'
-			+ '<div class="col s2">'
+			+ '<div class="col s12 l2">'
 			+ '<button  onclick="removePrize('
 			+ prizeCount
 			+ ');" class=" btn-floating btn-large waves-effect waves-light red prize_delete tooltipped" data-position="right" data-delay="50" data-tooltip="Remove Prize"><i class="material-icons right">delete</i></button>'

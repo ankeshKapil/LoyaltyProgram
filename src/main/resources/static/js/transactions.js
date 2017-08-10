@@ -167,6 +167,7 @@ $(document).ready(function(){
 	 
 	 var  table = $('#transaction').DataTable({
 		 "searching": false,
+		 "scrollX": true,
 		 ajax: {
 			 url:"/admin/transaction",
 			 "data": function ( d ) {

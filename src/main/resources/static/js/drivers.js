@@ -140,6 +140,7 @@ $(document).ready(function(){
 				 url:"/admin/drivers",
 
 			 },
+			 "scrollX": true,
 			 lengthChange:false,
 					 columns: [
 										 {
