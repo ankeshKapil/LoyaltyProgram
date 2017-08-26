@@ -28,34 +28,18 @@ $(document).ready(function(){
 		var redeem=this;
         
         if($("#card-number").valid() && redeem.checked){
-        	$('#amount').prop('disabled',true);
-            $('#amount').val(0);
-            $("#fuelVolumeLabel").text("Loyalty Points");
-            Materialize.updateTextFields();
-        	$('#prize').prop('disabled',false);
-        	populatePrizes();
-        	$("#prize-select").show();
+        	setTransactionRedeem();
         }
         else{
-        	$('#redeem').prop('checked',false);
-        	$('#amount').prop('disabled',false);
-        	 $("#fuelVolumeLabel").text("Fuel Volume");
-        	$('#amount').val("");
-        	$('#prize').empty();
-        	$('#prize').append($('<option>', { 
-		        value: "",
-		        text : "Choose your Prize",
-		        selected:true,
-		        disabled:true
-		    }));
-        	$('#prize').prop('disabled',true);
-        	$("#prize-select").hide();
-        	$( "#transaction-notes" ).val("");
-    	    $( "#fuelVolume" ).val("");
+        	resetTransactionRedeem();
         }
        
         
     });
+	
+	$("#card-number").change(function(){
+		resetTransactionRedeem();
+	});
 	
 	
 	$( "#prize" )
@@ -306,8 +290,8 @@ function formatChildRow ( d ) {
 			break;
 		}
 	}
-	return '<div class="row">'+
-		'<h3>About Driver</h3>'+
+	return '<h3>About Driver</h3>'+
+		'<div class="row">'+
 		'<div class="col s12">'+
 			'<div class="card-panel">'+
 			   '<div class="row">'+
@@ -377,4 +361,31 @@ function populatePrizes(){
 		}
 		
 	});
+}
+
+function resetTransactionRedeem(){
+	$('#redeem').prop('checked',false);
+	$('#amount').prop('disabled',false);
+	 $("#fuelVolumeLabel").text("Fuel Volume");
+	$('#amount').val("");
+	$('#prize').empty();
+	$('#prize').append($('<option>', { 
+        value: "",
+        text : "Choose your Prize",
+        selected:true,
+        disabled:true
+    }));
+	$('#prize').prop('disabled',true);
+	$("#prize-select").hide();
+	$( "#transaction-notes" ).val("");
+    $( "#fuelVolume" ).val("");
+}
+function setTransactionRedeem(){
+	$('#amount').prop('disabled',true);
+    $('#amount').val(0);
+    $("#fuelVolumeLabel").text("Loyalty Points");
+    Materialize.updateTextFields();
+	$('#prize').prop('disabled',false);
+	populatePrizes();
+	$("#prize-select").show();
 }

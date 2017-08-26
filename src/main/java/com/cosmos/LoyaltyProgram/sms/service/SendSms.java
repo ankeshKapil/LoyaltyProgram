@@ -1,5 +1,6 @@
 package com.cosmos.LoyaltyProgram.sms.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,17 +48,21 @@ public class SendSms {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.add("apikey", apiKey);
 		params.add("numbers", transaction.getDriver().getPhoneNumber());
-		params.add("test", "true");
+		//params.add("test", "true");
+		params.add("sender", "BPBURJ");
+		
 		String message="";
+		String firstName = transaction.getDriver().getFirstName();
+		BigDecimal fuelVolume = transaction.getFuelVolume();
 		if(transaction.isRedeem()){
-			 message="Priy "+ transaction.getDriver().getFirstName()+", Bruj Mohar Petro Centre par aapne "+transaction.getFuelVolume()+ 
-					 " loyalty points apne account se Redeem karaye hain."
-					+ " Dhanyawad";
+			message = "Priy " + firstName + " "+",%nBurj Mohar Petro Centre par aapne "
+					+ fuelVolume + " loyalty points apne account se Redeem karaye hain.%n"
+					+ "Dhanyawad";
 		}
 		else{
-			 message="Priy "+ transaction.getDriver().getFirstName()+", Bruj Mohar Petro Centre par aapne " +transaction.getFuelVolume()+ " Lt diesel"
-					+ " dalwaya hai. Aapke account mein " +transaction.getFuelVolume()+ " loyalty points jama kiye gye hain."
-					+ " Dhanyawad";
+			 message= "Priy " + firstName + " "+",%nBurj Mohar Petro Centre par aapne " +fuelVolume+ " Lt diesel"
+					+ " dalwaya hai. Aapke account mein " +fuelVolume+ " loyalty points jama kiye gye hain.%n"
+					+ "Dhanyawad";
 		}
 	
 		params.add("message", message);
@@ -80,7 +85,7 @@ public class SendSms {
 		for(Driver driver:drivers){
 			Message message=new Message();
 			message.setNumber(driver.getPhoneNumber());
-			message.setText("Priy"+driver.getFirstName()+",Aapne bde dino se Bruj Mohan Petro Centre par fueling nahi karwayi hai. Kripya seva ka mauka dein.");
+			message.setText("Priy"+driver.getFirstName()+",Aapne bde dino se Burj Mohan Petro Centre par fueling nahi karwayi hai. Kripya seva ka mauka dein.");
 			bulkMsg.add(message);
 		};
 		data.setMessages(bulkMsg);
