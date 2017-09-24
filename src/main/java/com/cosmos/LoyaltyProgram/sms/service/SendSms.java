@@ -53,6 +53,8 @@ public class SendSms {
 		
 		String message="";
 		String firstName = transaction.getDriver().getFirstName();
+		//sms template can have only upto 10 chars
+		firstName=firstName.length()>10?firstName.substring(0, 11):firstName;
 		BigDecimal fuelVolume = transaction.getFuelVolume();
 		if(transaction.isRedeem()){
 			message = "Priy " + firstName + " "+",%nBurj Mohar Petro Centre par aapne "

@@ -30,11 +30,11 @@ public class DriverServiceImpl implements DriverService {
 		driver.setUpdatedOn(LocalDateTime.now(ZoneId.of("Asia/Kolkata")));
 		if(StringUtils.isEmpty(driver.getId())){
 			driver.setCreatedOn(LocalDateTime.now(ZoneId.of("Asia/Kolkata")));
+			if(driverRepository.getDriverByCardNumber(driver.getCardNumber())!=null)
+				throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
+			if(driverRepository.getDriverByPhoneNumber(driver.getPhoneNumber())!=null)
+				throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
 		}
-		if(driverRepository.getDriverByCardNumber(driver.getCardNumber())!=null)
-			throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
-		if(driverRepository.getDriverByPhoneNumber(driver.getPhoneNumber())!=null)
-			throw new ValidationException("A Driver with this Loyalty card Number Already exists in database");
 		return driverRepository.save(driver);
 	}
 

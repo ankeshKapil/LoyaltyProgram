@@ -90,6 +90,7 @@ $(document).ready(function() {
 					document.getElementById('prize_fields').innerHTML="";
 					prizeCount=0;
 					$('#add-scheme-model').modal('close');
+					Materialize.toast(e.responseJSON.message, 4000,'red');
 				}
 			});
 

@@ -1,5 +1,7 @@
 package com.cosmos.LoyaltyProgram.service.impl;
 
+import javax.validation.ValidationException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class SchemeServiceImpl implements SchemeService{
 	@Transactional
 	public Scheme createScheme(Scheme scheme){
 		logger.info("Request to save scheme "+scheme);
+		if(scheme.getStartDate().equals(scheme.getEndDate()) || scheme.getStartDate().isAfter(scheme.getEndDate()))
+			throw new ValidationException("Invalid start date or end date please enter a correct value");
 		return schemeRepository.save(scheme);
 	}
 	
@@ -32,6 +36,7 @@ public class SchemeServiceImpl implements SchemeService{
 	}
 	
 	public void deleteScheme(Long id){
+		
 		schemeRepository.delete(id);
 	}
 }

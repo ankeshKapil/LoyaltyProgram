@@ -12,6 +12,7 @@ import javax.validation.ValidationException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -37,6 +38,10 @@ public class TransactionServiceImpl implements TransactionService {
 	Logger logger=Logger.getLogger(TransactionController.class);
 	@Autowired
 	SendSms sendSMS;
+
+	@Autowired
+    DriverRepository driverRepository;
+	
 	@Transactional
 	@Override
 	public Transaction createTransaction(Transaction transaction) {
@@ -95,7 +100,7 @@ public class TransactionServiceImpl implements TransactionService {
 			driver.setTotalFuelVolume(driver.getTotalFuelVolume().subtract(transaction.getFuelVolume()));
 		}
 		
-		driverService.saveDriver(driver);
+		driverRepository.save(driver);
 		transactionRepository.delete(id);
 
 	}

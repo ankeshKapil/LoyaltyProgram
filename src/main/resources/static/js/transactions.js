@@ -266,7 +266,9 @@ function getSchemesForAutoComplete(){
 	});
 }
 function deleteTransaction(row,table){
-
+	
+$("#delete-transaction").modal('open');
+$(".transaction_delete_agree").click(function(){
 	$.ajax({
 	    url: '/admin/transaction/'+row.id,
 	    type: 'DELETE',
@@ -274,6 +276,9 @@ function deleteTransaction(row,table){
 	    	table.ajax.reload();
 	    }
 	});
+	
+});
+	
 
 }
 
