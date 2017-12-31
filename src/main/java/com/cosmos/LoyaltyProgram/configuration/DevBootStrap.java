@@ -13,6 +13,11 @@ public class DevBootStrap implements ApplicationListener<ContextRefreshedEvent>{
 	
 	private RoleRepository roleRepository;
 
+	
+	public DevBootStrap(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
 		initData();
